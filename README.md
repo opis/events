@@ -33,18 +33,18 @@ class CustomEvent extends Event
     
     public function __construct($name, $data = null, $cancelable = false)
     {
-	parent::__construct($name, $cancelable);
-	$this->eventData = $data;
+        parent::__construct($name, $cancelable);
+        $this->eventData = $data;
     }
     
     public static function init($name, $data = null, $cancelable = false)
     {
-	return new static($name, $data, $cancelable);
+        return new static($name, $data, $cancelable);
     }
     
     public function data()
     {
-	return $this->eventData;
+        return $this->eventData;
     }
 }
 
