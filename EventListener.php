@@ -21,9 +21,8 @@
 namespace Opis\Events;
 
 use Closure;
-use Opis\Events\Event;
 
-class Listener
+class EventListener
 {
     protected static $listeners = array();
     

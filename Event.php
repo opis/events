@@ -68,7 +68,7 @@ class Event
             throw new RuntimeException('The event was already dispatched');
         }
         $this->wasDispatched = true;
-        $list = &Listener::get($this->eventName);
+        $list = &EventListener::get($this->eventName);
         foreach($list as &$listener)
         {
             $listener['callback']($this);

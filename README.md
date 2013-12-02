@@ -2,13 +2,13 @@
 
 ```php
 use \Opis\Events\Event;
-use \Opis\Events\Listener;
+use \Opis\Events\EventListener;
 
-Listener::add('load', function(Event $event){
+EventListener::add('load', function(Event $event){
     print "Event A\n";
 });
 
-Listener::add('load', function(Event $event){
+EventListener::add('load', function(Event $event){
   print "Event B\n";
 });
 
@@ -25,7 +25,7 @@ Event A
 
 ```php
 use \Opis\Events\Event;
-use \Opis\Events\Listener;
+use \Opis\Events\EventListener;
 
 class CustomEvent extends Event
 {
@@ -48,7 +48,7 @@ class CustomEvent extends Event
     }
 }
 
-Listener::add('custom', function(CustomEvent $event){
+EventListener::add('custom', function(CustomEvent $event){
     print $event->data();
 });
 

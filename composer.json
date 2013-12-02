@@ -1,9 +1,29 @@
 {
     "name": "opis/events",
+    "description": "Opis Events",
+    "keywords": ["opis", "events"],
+    "homepage": "http://opis.io",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Marius Sarca",
+            "email": "marius.sarca@gmail.com"
+        }
+    ],
     "require": {
         "php": ">=5.3.0"
     },
     "autoload": {
         "psr-0": {"Opis\\Events": ""}
+    },
+    "target-dir": "Opis/Events",
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
     }
 }
