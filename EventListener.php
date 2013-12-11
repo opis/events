@@ -26,80 +26,96 @@ class EventListener
 {
     protected static $listeners = array();
     
+    protected static $cache = array();
+    
     protected function __construct()
     {
         
     }
     
-    protected static function sort($name)
+    protected static function buildCache($name)
     {
-        if(!static::$listeners[$name]['sorted'])
+        if(!isset(static::$cache[$name]))
         {
-            $list = &static::$listeners[$name]['list'];
-            uasort($list, function(&$a, &$b){
+            static::$cache[$name] = array();
+            
+            foreach(static::$listeners as &$listener)
+            {
+                if(preg_match($listener['match'], $name))
+                {
+                    static::$cache[$name][] = $listener;
+                }
+            }
+            
+            uasort(static::$cache[$name], function(&$a, &$b){
                 if($a['priority'] === $b['priority'])
                 {
                     return 0;
                 }
                 return $a['priority'] < $b['priority'] ? 1 : -1;
             });
-            static::$listeners[$name]['sorted'] = true;
         }
     }
     
-    protected static function create($name)
+    protected static function clearCache($name)
     {
-        static::$listeners[$name] = array(
-            'sorted' => true,
-            'list' => array(),
-        );
+        $keys = array_keys(static::$cache);
+        
+        foreach($keys as $key)
+        {
+            if(preg_match($name, $key))
+            {
+                unset(static::$cache[$key]);
+            }
+        }
     }
+    
     
     public static function add($name, Closure $callback, $priority = 0)
     {
-        if(!static::has($name))
-        {
-            static::create($name);
-        }
+        $match = '`^' . str_replace('\*','.*', preg_quote($name, '`')) . '$`u';
         
-        static::$listeners[$name]['sorted'] = false;
-        
-        static::$listeners[$name]['list'][] = array(
-            'priority' => $priority,
+        static::$listeners[] = array(
+            'match' => $match,
             'callback' => $callback,
+            'priority' => $priority,
         );
         
+        static::clearCache($match);
     }
     
     public static function &get($name)
     {
-        if(!static::has($name))
-        {
-            static::create($name);
-        }
+        static::buildCache($name);
         
-        static::sort($name);
-        
-        return static::$listeners[$name]['list'];
-    }
-    
-    public static function remove($name)
-    {
-        if(static::has($name))
-        {
-            static::$listeners[$name]['sorted'] = true;
-            static::$listeners[$name]['list'] = array();
-        }
+        return static::$cache[$name];
     }
     
     public static function has($name)
     {
-        return isset(static::$listeners[$name]);
+        static::buildCache($name);
+        return isset(static::$cache[$name]) && !empty(static::$cache[$name]);
+    }
+    
+    public static function remove($name)
+    {
+        unset(static::$cache[$name]);
+        
+        $keys = array_keys(static::$listeners);
+        
+        foreach($keys as $key)
+        {
+            if(preg_match(static::$listeners[$key]['match'], $name))
+            {
+                unset(static::$listeners[$key]);
+            }
+        }
     }
     
     public static function clear()
     {
         static::$listeners = array();
+        static::$cache = array();
     }
     
 }

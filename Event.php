@@ -77,6 +77,7 @@ class Event
                 break;
             }
         }
+        return $this;
     }
     
 }
