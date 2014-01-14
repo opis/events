@@ -16,7 +16,6 @@
     "autoload": {
         "psr-4": {"Opis\\Events\\": "lib/"}
     },
-    "target-dir": "Opis/Events",
     "config": {
         "preferred-install": "dist"
     },
