@@ -22,11 +22,6 @@ namespace Opis\Events\Contracts;
 
 use Serializable;
  
-interface EventHandlerInterface extends Serializable
-{
-    function handle(Event $event);
-}
-
 interface EventInterface
 {
     function name();
@@ -34,6 +29,11 @@ interface EventInterface
     function canceled();
     
     function stop();
+}
+
+interface EventHandlerInterface extends Serializable
+{
+    function handle(EventInterface $event);
 }
 
 interface EventTargetInterface extends Serializable
