@@ -21,6 +21,7 @@
 namespace Opis\Events;
 
 use RuntimeException;
+use Opis\Events\Contracts\EventTargetInterface;
 
 class Event
 {
@@ -30,17 +31,13 @@ class Event
     
     protected $isCanceled = false;
     
-    protected $wasDispatched = false;
+    protected $eventTarget;
     
-    public function __construct($name, $cancelable = false)
+    public function __construct(EventTargetInterface $target, $name, $cancelable = false)
     {
+        $this->eventTarget = $target;
         $this->eventName = $name;
         $this->cancelable = $cancelable;
-    }
-    
-    public static function init($name, $cancelable = false)
-    {
-        return new Event($name, $cancelable);
     }
     
     public function name()
@@ -63,21 +60,7 @@ class Event
     
     public function dispatch()
     {
-        if($this->wasDispatched)
-        {
-            throw new RuntimeException('The event was already dispatched');
-        }
-        $this->wasDispatched = true;
-        $list = &EventListener::get($this->eventName);
-        foreach($list as &$listener)
-        {
-            $listener['callback']($this);
-            if($this->isCanceled)
-            {
-                break;
-            }
-        }
-        return $this;
+        return $this->eventTarget->dispatch($this);
     }
     
 }
