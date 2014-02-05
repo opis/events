@@ -33,9 +33,11 @@ class EventHandler implements EventHandlerInterface
         $this->callback = $callback;
     }
     
+    
     public function handle(EventInterface $event)
     {
-       $this->callback($event);
+        $callback = $this->callback;
+        $callback($event);
     }
     
     public function serialize()
