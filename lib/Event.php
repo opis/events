@@ -22,8 +22,9 @@ namespace Opis\Events;
 
 use RuntimeException;
 use Opis\Events\Contracts\EventTargetInterface;
+use Opis\Events\Contracts\EventInterface;
 
-class Event
+class Event implements EventInterface
 {
     protected $eventName;
     
