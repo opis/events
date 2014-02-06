@@ -19,7 +19,7 @@ class EventTarget implements EventTargetInterface
             uasort($this->eventList[$type], function(&$a, &$b){
                 if($a['priority'] === $b['priority'])
                 {
-                    return 0;
+                    return 1;
                 }
                 return $a['priority'] < $b['priority'] ? -1 : 1;
             });
