@@ -10,20 +10,21 @@ class EventTarget implements EventTargetInterface
 {
     
     protected $eventList = array();
-    protected $dirty = false;
+    protected $dirty = array();
     
-    protected function sortList()
+    protected function sortList($type)
     {
-        if($this->dirty)
+        if($this->dirty[$type])
         {
-            uasort($this->eventList, function(&$a, &$b){
+            uasort($this->eventList[$type], function(&$a, &$b){
                 if($a['priority'] === $b['priority'])
                 {
                     return 0;
                 }
                 return $a['priority'] < $b['priority'] ? 1 : -1;
             });
-            $this->dirty = false;
+            
+            $this->dirty[$type] = false;
         }
     }
     
@@ -33,7 +34,8 @@ class EventTarget implements EventTargetInterface
             'handler' => $handler,
             'priority' => $priority,
         );
-        $this->dirty = true;
+        
+        $this->dirty[$type] = true;
         
         return $this;
     }
@@ -71,11 +73,13 @@ class EventTarget implements EventTargetInterface
     
     public function dispatch(EventInterface $event)
     {   
-        $this->sortList();
+        $type = $event->name();
         
-        if(isset($this->eventList[$event->name()]))
+        if(isset($this->eventList[$type]))
         {
-            foreach($this->eventList[$event->name()] as &$entry)
+            $this->sortList($type);
+            
+            foreach($this->eventList[$type] as &$entry)
             {
                 $entry['handler']->handle($event);
                 if($event->canceled())
