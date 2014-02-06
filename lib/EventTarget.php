@@ -21,7 +21,7 @@ class EventTarget implements EventTargetInterface
                 {
                     return 0;
                 }
-                return $a['priority'] < $b['priority'] ? 1 : -1;
+                return $a['priority'] < $b['priority'] ? -1 : 1;
             });
             
             $this->dirty[$type] = false;
