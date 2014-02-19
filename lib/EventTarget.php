@@ -22,9 +22,10 @@ namespace Opis\Events;
 
 use Closure;
 use InvalidArgumentException;
+use Serializable;
 use Opis\Routing\Pattern;
 
-class EventTarget
+class EventTarget implements Serializable
 {
     
     protected $collection;
@@ -75,6 +76,17 @@ class EventTarget
         }
         
         return $event;
+    }
+    
+    public function serialize()
+    {
+        return serialize($this->collection);
+    }
+    
+    public function unserialize($data)
+    {
+        $this->collection = unserialize($data);
+        $this->router = new Router($this->collection);
     }
     
 }
