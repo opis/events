@@ -1,26 +1,42 @@
-##Opis Events##
+Opis Events
+===========
+[![Latest Stable Version](https://poser.pugx.org/opis/events/version.png)](https://packagist.org/packages/opis/events)
+[![Latest Unstable Version](https://poser.pugx.org/opis/events/v/unstable.png)](//packagist.org/packages/opis/events)
+[![License](https://poser.pugx.org/opis/events/license.png)](https://packagist.org/packages/opis/events)
+
+Trigger and intercept events
+-------------------------
+
+###Installation
+
+This library is available on [Packagist](https://packagist.org/packages/opis/events) and can be installed using [Composer](http://getcomposer.org)
+
+```json
+{
+    "require": {
+        "opis/events": "2.0.*"
+    }
+}
+```
+
+###Documentation
+
+###Examples
 
 ```php
-use \Opis\Events\Event;
-use \Opis\Events\EventHandler;
 use \Opis\Events\EventTarget;
 
 $target = new EventTarget();
 
-$eventA = new Event($target, 'A');
-$eventB = new Event($target, 'B');
+$target->handle('system.{name}', function($event){
+    print $event->name();
+})->where('name', 'load|init');
 
-$handler = new EventHandler(function($event){
-    print 'Event ' . $event->name();
+$target->handle('system.init', function(){
+    print 'System.Init event';
 });
 
-$target->add('A', $handler);
-$target->add('B', $handler);
+$target->create('system.load')->dispatch();
+$target->create('system.init')->dispatch();
 
-$eventA->dispatch();
-$eventB->dispatch();
-
-```
-Event A
-Event B
 ```

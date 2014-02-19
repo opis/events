@@ -20,33 +20,32 @@
 
 namespace Opis\Events;
 
-use Opis\Events\Contracts\EventHandlerInterface;
-use Opis\Events\Contracts\EventInterface;
+use Opis\Routing\Route;
+use Opis\Routing\Compiler;
+use Opis\Closure\SerializableClosure;
 
-class EventHandler implements EventHandlerInterface
+class EventHandler extends Route
 {
     
-    protected $callback;
+    protected static $compilerInstance;
     
-    public function __construct(callable $callback)
+    protected static function compiler()
     {
-        $this->callback = $callback;
+        if(static::$compilerInstance === null)
+        {
+            static::$compilerInstance = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
+        }
+        
+        return static::$compilerInstance;
     }
     
-    
-    public function handle(EventInterface $event)
+    public function getCompiler()
     {
-        $callback = $this->callback;
-        $callback($event);
+        return static::compiler();
     }
     
-    public function serialize()
+    public function where($name, $value)
     {
-        return serialize($this->callback);
-    }
-    
-    public function unserialize($data)
-    {
-        $this->callback = unserialize($data);
+        return $this->wildcard($name, $value);
     }
 }

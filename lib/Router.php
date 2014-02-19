@@ -20,56 +20,39 @@
 
 namespace Opis\Events;
 
+use Opis\Routing\Router as BaseRouter;
+use Opis\Routing\Collections\FilterCollection;
+use Opis\Routing\PathFilter;
 use Opis\Routing\Contracts\PathInterface;
 
-class Event implements PathInterface
+class Router extends BaseRouter
 {
-    protected $eventName;
+    protected static $filterCollection;
     
-    protected $cancelable;
-    
-    protected $isCanceled = false;
-    
-    protected $eventTarget;
-    
-    public function __construct(EventTarget $target, $name, $cancelable = false)
+    public function __construct(RouteCollection $routes)
     {
-        $this->eventTarget = $target;
-        $this->eventName = $name;
-        $this->cancelable = $cancelable;
-    }
-    
-    public function target()
-    {
-        return $this->eventTarget;
-    }
-    
-    public function name()
-    {
-        return $this->eventName;
-    }
-    
-    public function canceled()
-    {
-        return $this->isCanceled;
-    }
-    
-    public function stop()
-    {
-        if($this->cancelable === true)
+        if(static::$filterCollection === null)
         {
-            $this->isCanceled = true;
+            static::$filterCollection = new FilterCollection();
+            static::$filterCollection[] = new PathFilter();
         }
+        $this->routes = $routes;
+        $this->filters = static::$filterCollection;
     }
     
-    public function dispatch()
+    public function route(PathInterface $path)
     {
-        return $this->eventTarget->dispatch($this);
-    }
-    
-    public function __toString()
-    {
-        return $this->eventName;
+        $result = array();
+        
+        foreach($this->routes as $route)
+        {
+            if($this->pass($path, $route))
+            {
+                $result[] = $route->getAction();
+            }
+        }
+        
+        return $result;
     }
     
 }

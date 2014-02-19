@@ -1,112 +1,80 @@
 <?php
+/* ===========================================================================
+ * Opis Project
+ * http://opis.io
+ * ===========================================================================
+ * Copyright 2013 Marius Sarca
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============================================================================ */
 
 namespace Opis\Events;
 
-use Opis\Events\Contracts\EventTargetInterface;
-use Opis\Events\Contracts\EventHandlerInterface;
-use Opis\Events\Contracts\EventInterface;
+use Closure;
+use InvalidArgumentException;
+use Opis\Routing\Pattern;
 
-class EventTarget implements EventTargetInterface
+class EventTarget
 {
     
-    protected $eventList = array();
-    protected $dirty = array();
+    protected $collection;
     
-    protected function sortList($type)
+    protected $router;
+    
+    public function __construct(RouteCollection $collection = null)
     {
-        if($this->dirty[$type])
+        if($collection === null)
         {
-            uasort($this->eventList[$type], function(&$a, &$b){
-                if($a['priority'] === $b['priority'])
-                {
-                    return 1;
-                }
-                return $a['priority'] < $b['priority'] ? -1 : 1;
-            });
+            $collection = new RouteCollection();
+        }
+        
+        $this->collection = $collection;
+        $this->router = new Router($this->collection);
+    }
+    
+    public function handle($event, Closure $callback, $priority = 0)
+    {
+        $handler = new EventHandler(new Pattern($event), $callback);
+        $this->collection[] = $handler;
+        return $handler->set('priority', $priority);
+    }
+    
+    public function create($name, $cancelable = false)
+    {
+        return new Event($this, $name, $cancelable);
+    }
+    
+    public function dispatch(Event $event)
+    {
+        if($event->target() !== $this)
+        {
+            throw new InvalidArgumentException('Inavlid target');
+        }
+        
+        $this->collection->sort();
+        $handlers = $this->router->route($event);
+        
+        foreach($handlers as $callback)
+        {
+            $callback($event);
             
-            $this->dirty[$type] = false;
-        }
-    }
-    
-    public function add($type, EventHandlerInterface $handler, $priority = 0)
-    {
-        $this->eventList[$type][] = array(
-            'handler' => $handler,
-            'priority' => $priority,
-        );
-        
-        $this->dirty[$type] = true;
-        
-        return $this;
-    }
-    
-    public function remove($type, EventHandlerInterface $handler)
-    {
-        if(isset($this->eventList[$type]))
-        {
-            foreach($this->eventList[$type] as $key => $object)
+            if($event->canceled())
             {
-                if($object['handler'] === $handler)
-                {
-                    unset($this->eventList[$type][$key]);
-                    break;
-                }
-            }
-        }
-        
-        return $this;
-    }
-    
-    public function clear($type = null)
-    {
-        if($type !== null)
-        {
-            $this->eventList = array();
-        }
-        else
-        {
-            unset($this->eventList[$type]);
-        }
-        
-        return $this;
-    }
-    
-    public function dispatch(EventInterface $event)
-    {   
-        $type = $event->name();
-        
-        if(isset($this->eventList[$type]))
-        {
-            $this->sortList($type);
-            
-            foreach($this->eventList[$type] as &$entry)
-            {
-                $entry['handler']->handle($event);
-                if($event->canceled())
-                {
-                    break;
-                }
+                break;
             }
         }
         
         return $event;
-    }
-    
-    public function serialize()
-    {
-        return serialize(array(
-            'eventList' => $this->eventList,
-            'dirty' => $this->dirty,
-        ));
-    }
-    
-    public function unserialize($data)
-    {
-        $object = unserialize($data);
-        foreach($object as $key => $value)
-        {
-            $this->{$key} = $value;
-        }
     }
     
 }
