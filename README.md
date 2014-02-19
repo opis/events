@@ -4,7 +4,7 @@ Opis Events
 [![Latest Unstable Version](https://poser.pugx.org/opis/events/v/unstable.png)](//packagist.org/packages/opis/events)
 [![License](https://poser.pugx.org/opis/events/license.png)](https://packagist.org/packages/opis/events)
 
-Trigger and intercept events
+Dispatch and intercept events
 -------------------------
 
 ###Installation

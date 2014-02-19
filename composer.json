@@ -1,7 +1,7 @@
 {
     "name": "opis/events",
-    "description": "Trigger and intercept events",
-    "keywords": ["events", "dispatcher", "trigger", "event"],
+    "description": "Dispatch and intercept events",
+    "keywords": ["events", "dispatch", "event", "handler"],
     "homepage": "http://opis.io",
     "license": "Apache-2.0",
     "authors": [
