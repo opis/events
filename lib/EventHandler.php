@@ -26,22 +26,14 @@ use Opis\Closure\SerializableClosure;
 
 class EventHandler extends Route
 {
-    
-    protected static $compilerInstance;
-    
-    protected static function compiler()
+    public static function getCompiler()
     {
-        if(static::$compilerInstance === null)
+        if(static::$compiler === null)
         {
-            static::$compilerInstance = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
+            static::$compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
         }
         
-        return static::$compilerInstance;
-    }
-    
-    public function getCompiler()
-    {
-        return static::compiler();
+        return static::$compiler;
     }
     
     public function where($name, $value)
