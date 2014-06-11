@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### Opis Routing 2.3.1, 2014.06.11
+
+*  Fixed a bug in `Opis\Events\EventHandler`.
+
 ### Opis Events 2.3.0, 2014.06.11
 
 * Updated `opis/routing` library dependency to version `2.3.*`
