@@ -1,6 +1,6 @@
 {
     "name": "opis/events",
-    "description": "Dispatch and intercept events",
+    "description": "Opis Events is a library that can be used for dispatching and intercepting events. This library is builded on top of the Opis Routing library and provides a full range of features like filters and events' priorities.",
     "keywords": ["events", "dispatch", "event", "handler"],
     "homepage": "http://opis.io",
     "license": "Apache-2.0",
