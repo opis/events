@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### Opis Events 2.4.0, 2014.11.25
+
+* Added autoload file
+
 ### Opis Events 2.4.0, 2014.10.23
 
 * Updated `opis/routing` dependency to version `2.4.*`
