@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### Opis Events 2.5.0, 2015.03.20
+
+* Updated `opis/routing` library dependency to version `2.5.*`
+
 ### Opis Events 2.4.0, 2014.11.25
 
 * Added autoload file
