@@ -20,10 +20,10 @@
 
 namespace Opis\Events;
 
-use Closure;
-use InvalidArgumentException;
 use Serializable;
 use Opis\Routing\Pattern;
+use Opis\Routing\Callback;
+use InvalidArgumentException;
 
 class EventTarget implements Serializable
 {
@@ -43,7 +43,7 @@ class EventTarget implements Serializable
         $this->router = new Router($this->collection);
     }
     
-    public function handle($event, Closure $callback, $priority = 0)
+    public function handle($event, $callback, $priority = 0)
     {
         $handler = new EventHandler(new Pattern($event), $callback);
         $this->collection[] = $handler;
@@ -67,7 +67,9 @@ class EventTarget implements Serializable
         
         foreach($handlers as $callback)
         {
-            $callback($event);
+            
+            $callback = new Callback($callback);
+            $callback->invoke(array($event));
             
             if($event->canceled())
             {

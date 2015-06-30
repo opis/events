@@ -20,9 +20,9 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\Contracts\PathInterface;
+use Opis\Routing\Path;
 
-class Event implements PathInterface
+class Event extends Path
 {
     protected $eventName;
     

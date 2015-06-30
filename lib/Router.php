@@ -20,10 +20,10 @@
 
 namespace Opis\Events;
 
+use Opis\Routing\Path;
+use Opis\Routing\PathFilter;
 use Opis\Routing\Router as BaseRouter;
 use Opis\Routing\Collections\FilterCollection;
-use Opis\Routing\PathFilter;
-use Opis\Routing\Contracts\PathInterface;
 
 class Router extends BaseRouter
 {
@@ -40,7 +40,7 @@ class Router extends BaseRouter
         $this->filters = static::$filterCollection;
     }
     
-    public function route(PathInterface $path)
+    public function route(Path $path)
     {
         $result = array();
         
