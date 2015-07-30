@@ -1,8 +1,8 @@
 CHANGELOG
 -----------
-### Opis Events 3.0.x-dev
+### Opis Events 3.0.0, 2015.07.31
 
-* Updated `opis/routing` library dependency to version `3.0.*-dev`
+* Updated `opis/routing` library dependency to version `3.0.*`
 * Updated all classes to reflect `opis/routing`'s changes
 
 ### Opis Events 2.5.0, 2015.03.20
