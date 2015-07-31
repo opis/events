@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### Opis Events
+
+* Removed `branch-alias` property from `composer.json` file
+
 ### Opis Events 3.0.0, 2015.07.31
 
 * Updated `opis/routing` library dependency to version `3.0.*`
