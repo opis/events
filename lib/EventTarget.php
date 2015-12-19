@@ -23,72 +23,101 @@ namespace Opis\Events;
 use Serializable;
 use Opis\Routing\Pattern;
 use Opis\Routing\Callback;
-use InvalidArgumentException;
 
 class EventTarget implements Serializable
 {
-    
+    /** @var    \Opis\Events\RouteCollection */
     protected $collection;
-    
+
+    /** @var    \Opis\Events\Router */
     protected $router;
-    
+
+    /**
+     * Constructor
+     * 
+     * @param   \Opis\Events\RouteCollection|null   $collection (optional)
+     */
     public function __construct(RouteCollection $collection = null)
     {
-        if($collection === null)
-        {
+        if ($collection === null) {
             $collection = new RouteCollection();
         }
-        
+
         $this->collection = $collection;
         $this->router = new Router($this->collection);
     }
-    
+
+    /**
+     * Handle an event
+     * 
+     * @param   string      $event      Event's name
+     * @param   callable    $callback   Callback
+     * @param   int         $priority   (optional) Event's priority
+     * 
+     * @return  EventHandler
+     */
     public function handle($event, $callback, $priority = 0)
     {
         $handler = new EventHandler(new Pattern($event), $callback);
         $this->collection[] = $handler;
         return $handler->set('priority', $priority);
     }
-    
-    public function create($name, $cancelable = false)
+
+    /**
+     * Emits an event
+     * 
+     * @param   string  $name       Event's name
+     * @param   boolean $cancelable (optional) Cancelable event
+     * 
+     * @return  Event
+     */
+    public function emit($name, $cancelable = false)
     {
-        return new Event($this, $name, $cancelable);
+        return $this->dispatch(new Event($name, $cancelable));
     }
-    
+
+    /**
+     * Dispatch an event
+     * 
+     * @param   Event   $event  Event
+     * 
+     * @return  Event
+     */
     public function dispatch(Event $event)
     {
-        if($event->target() !== $this)
-        {
-            throw new InvalidArgumentException('Inavlid target');
-        }
-        
         $this->collection->sort();
         $handlers = $this->router->route($event);
-        
-        foreach($handlers as $callback)
-        {
-            
+
+        foreach ($handlers as $callback) {
             $callback = new Callback($callback);
             $callback->invoke(array($event));
-            
-            if($event->canceled())
-            {
+
+            if ($event->canceled()) {
                 break;
             }
         }
-        
+
         return $event;
     }
-    
+
+    /**
+     * Serialize
+     * 
+     * @return  string
+     */
     public function serialize()
     {
         return serialize($this->collection);
     }
-    
+
+    /**
+     * Unserialize
+     * 
+     * @param   string  $data
+     */
     public function unserialize($data)
     {
         $this->collection = unserialize($data);
         $this->router = new Router($this->collection);
     }
-    
 }

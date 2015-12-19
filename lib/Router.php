@@ -27,32 +27,41 @@ use Opis\Routing\Collections\FilterCollection;
 
 class Router extends BaseRouter
 {
+    /** @var \Opis\Routing\Collections\FilterCollection */
     protected static $filterCollection;
-    
+
+    /**
+     * Constructor
+     * 
+     * @param   \Opis\Events\RouteCollection    $routes
+     */
     public function __construct(RouteCollection $routes)
     {
-        if(static::$filterCollection === null)
-        {
+        if (static::$filterCollection === null) {
             static::$filterCollection = new FilterCollection();
             static::$filterCollection[] = new PathFilter();
         }
         $this->routes = $routes;
         $this->filters = static::$filterCollection;
     }
-    
+
+    /**
+     * Route
+     * 
+     * @param   Path    $path
+     * 
+     * @return  mixed
+     */
     public function route(Path $path)
     {
         $result = array();
-        
-        foreach($this->routes as $route)
-        {
-            if($this->pass($path, $route))
-            {
+
+        foreach ($this->routes as $route) {
+            if ($this->pass($path, $route)) {
                 $result[] = $route->getAction();
             }
         }
-        
+
         return $result;
     }
-    
 }

@@ -26,55 +26,76 @@ use Opis\Routing\Collections\RouteCollection as BaseCollection;
 
 class RouteCollection extends BaseCollection
 {
-    
+    /** @var    boolean */
     protected $dirty = false;
-    
+
+    /**
+     * Sort collection
+     */
     public function sort()
     {
-        if($this->dirty)
-        {
-            uasort($this->collection, function(&$a, &$b){
+        if ($this->dirty) {
+            uasort($this->collection, function (&$a, &$b) {
                 $v1 = $a->get('priority', 0);
                 $v2 = $b->get('priority', 0);
-                if($v1 === $v2)
-                {
+                if ($v1 === $v2) {
                     return 0;
                 }
                 return $v1 < $v2 ? 1 : -1;
             });
-            
+
             $this->dirty = false;
         }
     }
-    
+    /**
+     * Add value to vollection
+     * 
+     * @param   mixed   $offset
+     * @param   mixed   $value
+     */
     public function offsetSet($offset, $value)
     {
         $this->dirty = true;
         parent::offsetSet($offset, $value);
     }
-    
+
+    /**
+     * Check if the type of $value is supported
+     * 
+     * @throws InvalidArgumentException
+     * 
+     * @param   \Opis\Events\EventHandler   $value
+     */
     protected function checkType($value)
     {
-        if(!($value instanceof EventHandler))
-        {
+        if (!($value instanceof EventHandler)) {
             throw new InvalidArgumentException('Expected \Opis\Events\EventHandler');
         }
     }
-    
+
+    /**
+     * Serialize
+     * @return  string
+     */
     public function serialize()
     {
         SerializableClosure::enterContext();
-        
+
         $object = serialize(array(
             'dirty' => $this->dirty,
             'collection' => $this->collection,
         ));
-        
+
         SerializableClosure::exitContext();
-        
+
         return $object;
     }
-    
+
+    /**
+     * Unserialize
+     * 
+     * @param   string  $data
+     */
     public function unserialize($data)
     {
         $object = SerializableClosure::unserializeData($data);

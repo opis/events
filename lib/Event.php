@@ -24,52 +24,62 @@ use Opis\Routing\Path;
 
 class Event extends Path
 {
+    /** @var    string  Event's name */
     protected $eventName;
-    
+
+    /** @var    boolean Cancelable event */
     protected $cancelable;
-    
+
+    /** @var    boolean Canceled event */
     protected $isCanceled = false;
-    
-    protected $eventTarget;
-    
-    public function __construct(EventTarget $target, $name, $cancelable = false)
+
+    /**
+     * Constructor
+     * 
+     * @param   string  $name       Event's name
+     * @param   boolean $cancelable (optional) Cancelable event
+     */
+    public function __construct($name, $cancelable = false)
     {
-        $this->eventTarget = $target;
         $this->eventName = $name;
         $this->cancelable = $cancelable;
     }
-    
-    public function target()
-    {
-        return $this->eventTarget;
-    }
-    
+
+    /**
+     * Event's name
+     * 
+     * @return  string
+     */
     public function name()
     {
         return $this->eventName;
     }
-    
+
+    /**
+     * Check if event was canceled
+     * 
+     * @return  boolean
+     */
     public function canceled()
     {
         return $this->isCanceled;
     }
-    
+
+    /**
+     * Cancel this event
+     */
     public function stop()
     {
-        if($this->cancelable === true)
-        {
+        if ($this->cancelable === true) {
             $this->isCanceled = true;
         }
     }
-    
-    public function dispatch()
-    {
-        return $this->eventTarget->dispatch($this);
-    }
-    
+
+    /**
+     * @return  string
+     */
     public function __toString()
     {
         return $this->eventName;
     }
-    
 }

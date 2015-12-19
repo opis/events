@@ -22,22 +22,21 @@ namespace Opis\Events;
 
 use Opis\Routing\Route;
 use Opis\Routing\Compiler;
-use Opis\Closure\SerializableClosure;
 
 class EventHandler extends Route
 {
+
     public static function getCompiler()
     {
         static $compiler = null;
-        
-        if($compiler === null)
-        {
-            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
+
+        if ($compiler === null) {
+            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL));
         }
-        
+
         return $compiler;
     }
-    
+
     public function where($name, $value)
     {
         return $this->wildcard($name, $value);
