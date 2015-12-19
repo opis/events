@@ -27,8 +27,6 @@ use Opis\Routing\Collections\FilterCollection;
 
 class Router extends BaseRouter
 {
-    /** @var \Opis\Routing\Collections\FilterCollection */
-    protected static $filterCollection;
 
     /**
      * Constructor
@@ -37,12 +35,9 @@ class Router extends BaseRouter
      */
     public function __construct(RouteCollection $routes)
     {
-        if (static::$filterCollection === null) {
-            static::$filterCollection = new FilterCollection();
-            static::$filterCollection[] = new PathFilter();
-        }
         $this->routes = $routes;
-        $this->filters = static::$filterCollection;
+        $this->filters = new FilterCollection();
+        $this->filters[] = new PathFilter();
     }
 
     /**
@@ -61,7 +56,7 @@ class Router extends BaseRouter
                 $result[] = $route->getAction();
             }
         }
-
+        
         return $result;
     }
 }
