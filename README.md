@@ -1,5 +1,6 @@
 Opis Events
 ===========
+[![Build Status](https://travis-ci.org/opis/events.svg?branch=master)](https://travis-ci.org/opis/events)
 [![Latest Stable Version](https://poser.pugx.org/opis/events/version.png)](https://packagist.org/packages/opis/events)
 [![Latest Unstable Version](https://poser.pugx.org/opis/events/v/unstable.png)](//packagist.org/packages/opis/events)
 [![License](https://poser.pugx.org/opis/events/license.png)](https://packagist.org/packages/opis/events)
