@@ -26,7 +26,7 @@ use Opis\Routing\Compiler;
 class EventHandler extends Route
 {
 
-    public static function getCompiler()
+    public function getCompiler()
     {
         static $compiler = null;
 
