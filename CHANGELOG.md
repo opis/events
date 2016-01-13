@@ -1,9 +1,11 @@
 CHANGELOG
 -----------
-### v4.0.0, 2015.12.19
+### v4.0.0, 2016.01.14
 
 * Removed `branch-alias` property from `composer.json` file
+* Updated `opis/routing` library dependency to version `4.0.*`
 * Fixed CS
+* Added tests
 * Removed `Opis\Events\Event::dispatch` method
 * Removed `Opis\Events\Event::eventTarget` method
 * Removed `Opis\Events\EventTarget` argument form `Opis\Events\Event` 
