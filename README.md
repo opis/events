@@ -17,7 +17,7 @@ events' priorities.
 ### Requirements
 
 * PHP 5.3.* or higher
-* [Opis Routing](http://www.opis.io/routing) 3.0.*
+* [Opis Routing](http://www.opis.io/routing) 4.0.*
 
 ### Installation
 
