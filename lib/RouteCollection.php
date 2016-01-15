@@ -34,12 +34,24 @@ class RouteCollection extends BaseCollection
      */
     public function sort()
     {
+        static $eq;
+
         if ($this->dirty) {
-            uasort($this->collection, function (&$a, &$b) {
+
+            if ($eq === null) {
+                $arr = array(array(0, 1), array(0, -1));
+                uasort($arr, function($a, $b) {
+                    return 0;
+                });
+                $arr = reset($arr);
+                $eq = $arr[1];
+            }
+
+            uasort($this->collection, function ($a, $b) use($eq) {
                 $v1 = $a->get('priority', 0);
                 $v2 = $b->get('priority', 0);
                 if ($v1 === $v2) {
-                    return 0;
+                    return $eq;
                 }
                 return $v1 < $v2 ? 1 : -1;
             });
@@ -47,6 +59,7 @@ class RouteCollection extends BaseCollection
             $this->dirty = false;
         }
     }
+
     /**
      * Add value to vollection
      * 
