@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### v4.0.1, 2016.01.16
+
+* Fixed sorting
+
 ### v4.0.0, 2016.01.14
 
 * Removed `branch-alias` property from `composer.json` file
