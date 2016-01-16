@@ -1,8 +1,9 @@
 CHANGELOG
 -----------
-### v4.0.1, 2016.01.16
+### v4.1.0, 2016.01.16
 
 * Fixed sorting
+* Updated `opis/routing` library dependency to version `^4.1.0`
 
 ### v4.0.0, 2016.01.14
 
