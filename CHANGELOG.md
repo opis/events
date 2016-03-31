@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### v4.1.1, 2016.01.16
+
+* Fixed a bug in `EventHanlder::getCompiler`
+
 ### v4.1.0, 2016.01.16
 
 * Fixed sorting
