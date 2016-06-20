@@ -20,11 +20,13 @@
 
 namespace Opis\Events\Test;
 
+use Opis\Events\Event;
 use Opis\Events\EventTarget;
 use PHPUnit\Framework\TestCase;
 
 class EventsTest extends TestCase
 {
+    /** @var  EventTarget */
     protected $target;
     
     public function setUp()
@@ -34,7 +36,7 @@ class EventsTest extends TestCase
 
     public function testBasicEvent()
     {
-        $this->target->handle('ok', function($event){
+        $this->target->handle('ok', function(Event $event){
             print $event->name();
         });
         
@@ -44,7 +46,7 @@ class EventsTest extends TestCase
     
     public function testParams()
     {
-        $this->target->handle('foo.{bar}', function($event){
+        $this->target->handle('foo.{bar}', function(Event $event){
             print $event->name();
         })->where('bar', 'x');
         
