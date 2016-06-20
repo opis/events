@@ -1,54 +1,157 @@
-CHANGELOG
------------
-### v4.1.1, 2016.01.16
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
 
-* Fixed a bug in `EventHanlder::getCompiler`
+## v5.0.x-dev
+### Added
+- Support for PHP 7.0.x
 
-### v4.1.0, 2016.01.16
+### Removed
+- Support for PHP 5.x
+- `Opis\Events\Router` class
+- `Opis\Events\EventHandler` class
 
-* Fixed sorting
-* Updated `opis/routing` library dependency to version `^4.1.0`
+### Changed
+- Updated `opis/routing` dependency to version `5.0.x-dev`
+- All classes were updated in order to reflect changes
 
-### v4.0.0, 2016.01.14
+### Fixed
+- Nothing
 
-* Removed `branch-alias` property from `composer.json` file
-* Updated `opis/routing` library dependency to version `4.0.*`
-* Fixed CS
-* Added tests
-* Removed `Opis\Events\Event::dispatch` method
-* Removed `Opis\Events\Event::eventTarget` method
-* Removed `Opis\Events\EventTarget` argument form `Opis\Events\Event` 
-* Added `Opis\Events\EventTarget::emit` method
-* Removed `Opis\Events\EventTarget::create` method
-* Changed the way events are dispatched
+## v4.1.1 - 2016.01.16
+### Added
+- Nothing
 
-### v3.0.0, 2015.07.31
+### Removed
+- Nothing
 
-* Updated `opis/routing` library dependency to version `3.0.*`
-* Updated all classes to reflect `opis/routing`'s changes
+### Changed
+- Nothing
 
-### v2.5.0, 2015.03.20
+### Fixed
+- Fixed a bug in `EventHanlder::getCompiler`
 
-* Updated `opis/routing` library dependency to version `2.5.*`
+## v4.1.0 - 2016.01.16
+### Added
+- Nothing
 
-### v2.4.0, 2014.11.25
+### Removed
+- Nothing
 
-* Added autoload file
+### Changed
+- Updated `opis/routing` library dependency to version `^4.1.0`
 
-### v2.4.0, 2014.10.23
+### Fixed
+- Fixed sorting
 
-* Updated `opis/routing` dependency to version `2.4.*`
+## v4.0.0 - 2016.01.14
+### Added
+- Tests
+- `Opis\Events\EventTarget::emit` method
 
-### v2.3.1, 2014.06.11
+### Removed
+- `branch-alias` property from `composer.json` file
+- `Opis\Events\Event::dispatch` method
+- `Opis\Events\Event::eventTarget` method
+- `Opis\Events\EventTarget` argument form `Opis\Events\Event` 
+- `Opis\Events\EventTarget::create` method
 
-*  Fixed a bug in `Opis\Events\EventHandler`.
+### Changed
+- Updated `opis/routing` library dependency to version `4.0.*`
+- Changed the way events are dispatched
 
-### v2.3.0, 2014.06.11
+### Fixed
+- Fixed CS
 
-* Updated `opis/routing` library dependency to version `2.3.*`
-* Updated `Opis\Events\EventHandler` to reflect changes in `opis/routing`
+## v3.0.0 - 2015.07.31
+### Added
+- Nothing
 
-### v2.2.0, 2014.06.04
+### Removed
+- Nothing
 
-* Started changelog
-* Updated `opis/routing` dependency to version `2.2.*`
+### Changed
+- Updated `opis/routing` library dependency to version `3.0.*`
+- Updated all classes to reflect `opis/routing`'s changes
+
+### Fixed
+- Nothing
+
+## v2.5.0 - 2015.03.20
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` library dependency to version `2.5.*`
+
+### Fixed
+- Nothing
+
+## v2.4.1 - 2014.11.25
+### Added
+- Autoload file
+
+### Removed
+- Nothing
+
+### Changed
+- Nothing
+
+### Fixed
+- Nothing
+
+## v2.4.0 - 2014.10.23
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` dependency to version `2.4.*`
+
+### Fixed
+- Nothing
+
+## v2.3.1 - 2014.06.11
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Nothing
+
+### Fixed
+- Fixed a bug in `Opis\Events\EventHandler`.
+
+## v2.3.0 - 2014.06.11
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` library dependency to version `2.3.*`
+- Updated `Opis\Events\EventHandler` to reflect changes in `opis/routing`
+
+### Fixed
+- Nothing
+
+## v2.2.0 - 2014.06.04
+### Added
+- Changelog file
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` dependency to version `2.2.*`
+
+### Fixed
+- Nothing
