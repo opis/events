@@ -75,12 +75,4 @@ class Event extends Path
             $this->isCanceled = true;
         }
     }
-
-    /**
-     * @return  string
-     */
-    public function __toString()
-    {
-        return $this->eventName;
-    }
 }
