@@ -39,10 +39,11 @@ class Event extends Path
      * @param   string  $name       Event's name
      * @param   boolean $cancelable (optional) Cancelable event
      */
-    public function __construct($name, $cancelable = false)
+    public function __construct(string $name, bool $cancelable = false)
     {
         $this->eventName = $name;
         $this->cancelable = $cancelable;
+        parent::__construct($name);
     }
 
     /**
@@ -50,7 +51,7 @@ class Event extends Path
      * 
      * @return  string
      */
-    public function name()
+    public function name(): string
     {
         return $this->eventName;
     }
@@ -60,7 +61,7 @@ class Event extends Path
      * 
      * @return  boolean
      */
-    public function canceled()
+    public function canceled(): bool
     {
         return $this->isCanceled;
     }

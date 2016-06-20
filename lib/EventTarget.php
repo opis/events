@@ -20,22 +20,22 @@
 
 namespace Opis\Events;
 
+use Opis\Routing\Route;
+use Opis\Routing\Router;
 use Serializable;
-use Opis\Routing\Pattern;
-use Opis\Routing\Callback;
 
 class EventTarget implements Serializable
 {
-    /** @var    \Opis\Events\RouteCollection */
+    /** @var    RouteCollection */
     protected $collection;
 
-    /** @var    \Opis\Events\Router */
+    /** @var    Router */
     protected $router;
 
     /**
      * Constructor
      * 
-     * @param   \Opis\Events\RouteCollection|null   $collection (optional)
+     * @param   RouteCollection|null   $collection (optional)
      */
     public function __construct(RouteCollection $collection = null)
     {
@@ -54,12 +54,12 @@ class EventTarget implements Serializable
      * @param   callable    $callback   Callback
      * @param   int         $priority   (optional) Event's priority
      * 
-     * @return  EventHandler
+     * @return  Route
      */
-    public function handle($event, $callback, $priority = 0)
+    public function handle(string $event, callable $callback, int $priority = 0): Route
     {
-        $handler = new EventHandler(new Pattern($event), $callback);
-        $this->collection[] = $handler;
+        $handler = new Route($event, $callback);
+        $this->collection->addRoute($handler);
         return $handler->set('priority', $priority);
     }
 
@@ -71,7 +71,7 @@ class EventTarget implements Serializable
      * 
      * @return  Event
      */
-    public function emit($name, $cancelable = false)
+    public function emit(string $name, bool $cancelable = false): Event
     {
         return $this->dispatch(new Event($name, $cancelable));
     }
@@ -83,16 +83,15 @@ class EventTarget implements Serializable
      * 
      * @return  Event
      */
-    public function dispatch(Event $event)
+    public function dispatch(Event $event): Event
     {
         $this->collection->sort();
-        $handlers = $this->router->route($event);
 
-        foreach ($handlers as $callback) {
-            $callback = new Callback($callback);
-            $callback->invoke(array($event));
-
-            if ($event->canceled()) {
+        /** @var Route $handler */
+        foreach ($this->router->match($event) as $handler){
+            $callback = $handler->getAction();
+            $callback($event);
+            if($event->canceled()){
                 break;
             }
         }
