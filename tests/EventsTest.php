@@ -18,9 +18,12 @@
  * limitations under the License.
  * ============================================================================ */
 
-use Opis\Events\EventTarget;
+namespace Opis\Events\Test;
 
-class EventsTest extends PHPUnit_Framework_TestCase
+use Opis\Events\EventTarget;
+use PHPUnit\Framework\TestCase;
+
+class EventsTest extends TestCase
 {
     protected $target;
     

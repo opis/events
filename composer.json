@@ -24,7 +24,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Opis\\Routing\\Test\\": "tests/"
+            "Opis\\Events\\Test\\": "tests/"
         }
     },
     "extra": {
