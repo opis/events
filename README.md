@@ -18,7 +18,7 @@ events' priorities.
 ### Requirements
 
 * PHP 5.3.* or higher
-* [Opis Routing](http://www.opis.io/routing) ^4.1.0
+* [Opis Routing](http://www.opis.io/routing) 5.0.x-dev
 
 ### Installation
 
@@ -27,21 +27,21 @@ This library is available on [Packagist](https://packagist.org/packages/opis/eve
 ```json
 {
     "require": {
-        "opis/events": "^4.1.1"
+        "opis/events": "5.0.x-dev"
     }
 }
 ```
 
 If you are unable to use [Composer](http://getcomposer.org) you can download the
-[tar.gz](https://github.com/opis/events/archive/4.1.1.tar.gz) or the [zip](https://github.com/opis/events/archive/4.1.1.zip)
+[tar.gz](https://github.com/opis/events/archive/master.tar.gz) or the [zip](https://github.com/opis/events/archive/master.zip)
 archive file, extract the content of the archive and include de `autoload.php` file into your project. 
 
 ```php
 
-require_once 'path/to/events-4.1.1/autoload.php';
+require_once 'path/to/events-master/autoload.php';
 
 ```
 
 ### Documentation
 
-Examples and documentation can be found at http://opis.io/events .
+Examples and documentation can be found [here](http://opis.io/events).

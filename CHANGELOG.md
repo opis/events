@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Support for PHP 5.x
 - `Opis\Events\Router` class
 - `Opis\Events\EventHandler` class
+- `Opis\Events\Event::__toString` overriding method
 
 ### Changed
 - Updated `opis/routing` dependency to version `5.0.x-dev`
