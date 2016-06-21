@@ -52,7 +52,7 @@ class RouteCollection extends BaseCollection
 
         $this->regex = null;
         uasort($this->routes, function(Route $a, Route $b){
-            return $a->get('priority', 0) <=> $b->get('priority', 0);
+            return $a->get('priority', 0) <= $b->get('priority', 0) ? 1 : -1;
         });
         $this->dirty = false;
     }
