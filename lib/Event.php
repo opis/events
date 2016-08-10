@@ -20,9 +20,9 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\Path;
+use Opis\Routing\Context;
 
-class Event extends Path
+class Event extends Context
 {
     /** @var    string  Event's name */
     protected $eventName;
