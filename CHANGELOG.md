@@ -15,6 +15,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Updated `opis/routing` dependency to version `5.0.x-dev`
 - All classes were updated in order to reflect changes
+- `Opis\Events\Event` is now extending `Opis\Routing\Context`
 
 ### Fixed
 - Nothing
