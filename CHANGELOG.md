@@ -5,6 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## v5.0.x-dev
 ### Added
 - Support for PHP 7.0.x
+- Source files were moved from `lib` to `src`
 
 ### Removed
 - Support for PHP 5.x
