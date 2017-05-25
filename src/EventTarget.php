@@ -41,7 +41,6 @@ class EventTarget implements Serializable
         }
 
         $this->collection = $collection;
-        $this->router = new Router($this->collection);
     }
 
     /**
@@ -82,18 +81,7 @@ class EventTarget implements Serializable
      */
     public function dispatch(Event $event): Event
     {
-        $this->collection->sort();
-
-        /** @var Route $handler */
-        foreach ($this->router->match($event) as $handler){
-            $callback = $handler->getAction();
-            $callback($event);
-            if($event->canceled()){
-                break;
-            }
-        }
-
-        return $event;
+        return $this->getRouter()->route($event);
     }
 
     /**
@@ -114,6 +102,17 @@ class EventTarget implements Serializable
     public function unserialize($data)
     {
         $this->collection = unserialize($data);
-        $this->router = new Router($this->collection);
+    }
+
+    /**
+     * @return Router
+     */
+    protected function getRouter(): Router
+    {
+        if($this->router === null){
+            $this->router = new Router(new EventDispatcher(), $this->collection);
+        }
+
+        return $this->router;
     }
 }
