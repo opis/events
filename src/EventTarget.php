@@ -110,7 +110,7 @@ class EventTarget implements Serializable
     protected function getRouter(): Router
     {
         if($this->router === null){
-            $this->router = new Router(new EventDispatcher(), $this->collection);
+            $this->router = new Router($this->collection, new EventDispatcher());
         }
 
         return $this->router;
