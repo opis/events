@@ -27,6 +27,11 @@
             "Opis\\Events\\Test\\": "tests/"
         }
     },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "5.0.x-dev"
