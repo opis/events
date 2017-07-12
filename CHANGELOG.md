@@ -6,12 +6,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Support for PHP 7.0.x
 - Source files were moved from `lib` to `src`
+- `Opis\Events\EventDispatcher` class
 
 ### Removed
 - Support for PHP 5.x
 - `Opis\Events\Router` class
 - `Opis\Events\EventHandler` class
-- `Opis\Events\Event::__toString` overriding method
 
 ### Changed
 - Updated `opis/routing` dependency to version `5.0.x-dev`
