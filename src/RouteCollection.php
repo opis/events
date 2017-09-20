@@ -74,7 +74,7 @@ class RouteCollection extends BaseCollection
 
         $object = serialize(array(
             'dirty' => $this->dirty,
-            'parent' => parent::serialize(),
+            'parent' => $this->getSerialize(),
         ));
 
         SerializableClosure::exitContext();
@@ -91,6 +91,6 @@ class RouteCollection extends BaseCollection
     {
         $object = unserialize($data);
         $this->dirty = $object['dirty'];
-        parent::unserialize($object['parent']);
+        $this->setUnserialize($object['parent']);
     }
 }
