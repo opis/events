@@ -26,7 +26,6 @@ class EventDispatcher implements IDispatcher
     /**
      * @param Router $router
      * @return Event
-     * @throws \Exception
      */
     public function dispatch(Router $router)
     {
@@ -56,7 +55,6 @@ class EventDispatcher implements IDispatcher
      * @param RouteCollection $routes
      * @param string $path
      * @return \Generator
-     * @throws \Exception
      */
     protected function match(RouteCollection $routes, string $path): \Generator
     {

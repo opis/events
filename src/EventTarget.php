@@ -52,7 +52,6 @@ class EventTarget implements Serializable
      * @param   int $priority (optional) Event's priority
      *
      * @return  Route
-     * @throws \Exception
      */
     public function handle(string $event, callable $callback, int $priority = 0): Route
     {
@@ -68,7 +67,6 @@ class EventTarget implements Serializable
      * @param   boolean $cancelable (optional) Cancelable event
      *
      * @return  Event
-     * @throws \Exception
      */
     public function emit(string $name, bool $cancelable = false): Event
     {
@@ -81,7 +79,6 @@ class EventTarget implements Serializable
      * @param   Event $event Event
      *
      * @return  Event
-     * @throws \Exception
      */
     public function dispatch(Event $event): Event
     {

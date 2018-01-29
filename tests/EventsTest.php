@@ -31,9 +31,6 @@ class EventsTest extends TestCase
         $this->target = new EventTarget();
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testBasicEvent()
     {
         $this->target->handle('ok', function (Event $event) {
@@ -44,9 +41,6 @@ class EventsTest extends TestCase
         $this->target->emit('ok');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testParams()
     {
         $this->target->handle('foo.{bar}', function (Event $event) {
@@ -58,9 +52,6 @@ class EventsTest extends TestCase
         $this->target->emit('foo.x');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testParams2()
     {
         $this->target->handle('foo.{bar}', function (Event $event) {
@@ -72,9 +63,6 @@ class EventsTest extends TestCase
         $this->target->emit('foo.x');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testDefaultPriority()
     {
         $this->target->handle('foo', function () {
@@ -89,9 +77,6 @@ class EventsTest extends TestCase
         $this->target->emit('foo');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testExplicitPriority()
     {
         $this->target->handle('foo', function () {
@@ -106,9 +91,6 @@ class EventsTest extends TestCase
         $this->target->emit('foo');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testExplicitPriorityEqual()
     {
         $this->target->handle('foo', function () {
@@ -123,9 +105,6 @@ class EventsTest extends TestCase
         $this->target->emit('foo');
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testDefaultPriorityNotCancel()
     {
         $this->target->handle('foo', function () {
@@ -141,9 +120,6 @@ class EventsTest extends TestCase
         $this->target->emit('foo', false);
     }
 
-    /**
-     * @throws \Exception
-     */
     public function testDefaultPriorityCancel()
     {
         $this->target->handle('foo', function () {
