@@ -19,7 +19,6 @@ namespace Opis\Events;
 
 use Opis\Routing\IDispatcher;
 use Opis\Routing\Route;
-use Opis\Routing\RouteCollection;
 use Opis\Routing\Router;
 
 class EventDispatcher implements IDispatcher

@@ -19,7 +19,6 @@ namespace Opis\Events;
 
 use Opis\Routing\Context;
 use Opis\Routing\Route;
-use Opis\Routing\RouteCollection;
 use Opis\Routing\Router;
 use Serializable;
 
@@ -42,9 +41,6 @@ class EventTarget implements Serializable
             $collection = new RouteCollection();
         }
 
-        if ($collection->getSortKey() === null) {
-            $collection->setSortKey('priority');
-        }
         $this->collection = $collection;
     }
 
