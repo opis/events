@@ -17,7 +17,6 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\Context;
 use Opis\Routing\IDispatcher;
 use Opis\Routing\Route;
 use Opis\Routing\Router;
@@ -26,31 +25,38 @@ class EventDispatcher implements IDispatcher
 {
     /**
      * @param Router $router
-     * @param Event|Context $context
      * @return Event
+     * @throws \Exception
      */
-    public function dispatch(Router $router, Context $context)
+    public function dispatch(Router $router)
     {
         /** @var RouteCollection $collection */
         $collection = $router->getRouteCollection();
         $collection->sort();
 
+        $context = $router->getContext();
+        $path = $context->path();
+
+        /** @var Event $event */
+        $event = $context->data();
+
         /** @var Route $handler */
-        foreach ($this->match($collection, (string) $context) as $handler){
+        foreach ($this->match($collection, $path) as $handler){
             $callback = $handler->getAction();
-            $callback($context);
-            if($context->canceled()){
+            $callback($event);
+            if($event->canceled()){
                 break;
             }
         }
 
-        return $context;
+        return $event;
     }
 
     /**
      * @param RouteCollection $routes
      * @param string $path
      * @return \Generator
+     * @throws \Exception
      */
     protected function match(RouteCollection $routes, string $path): \Generator
     {

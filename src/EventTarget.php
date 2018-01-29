@@ -17,6 +17,7 @@
 
 namespace Opis\Events;
 
+use Opis\Routing\Context;
 use Opis\Routing\Route;
 use Opis\Routing\Router;
 use Serializable;
@@ -45,12 +46,13 @@ class EventTarget implements Serializable
 
     /**
      * Handle an event
-     * 
-     * @param   string      $event      Event's name
-     * @param   callable    $callback   Callback
-     * @param   int         $priority   (optional) Event's priority
-     * 
+     *
+     * @param   string $event Event's name
+     * @param   callable $callback Callback
+     * @param   int $priority (optional) Event's priority
+     *
      * @return  Route
+     * @throws \Exception
      */
     public function handle(string $event, callable $callback, int $priority = 0): Route
     {
@@ -61,11 +63,12 @@ class EventTarget implements Serializable
 
     /**
      * Emits an event
-     * 
-     * @param   string  $name       Event's name
+     *
+     * @param   string $name Event's name
      * @param   boolean $cancelable (optional) Cancelable event
-     * 
+     *
      * @return  Event
+     * @throws \Exception
      */
     public function emit(string $name, bool $cancelable = false): Event
     {
@@ -74,14 +77,15 @@ class EventTarget implements Serializable
 
     /**
      * Dispatch an event
-     * 
-     * @param   Event   $event  Event
-     * 
+     *
+     * @param   Event $event Event
+     *
      * @return  Event
+     * @throws \Exception
      */
     public function dispatch(Event $event): Event
     {
-        return $this->getRouter()->route($event);
+        return $this->getRouter()->route(new Context($event->name(), $event));
     }
 
     /**

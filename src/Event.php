@@ -17,9 +17,7 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\Context;
-
-class Event extends Context
+class Event
 {
     /** @var    string  Event's name */
     protected $eventName;
@@ -40,7 +38,6 @@ class Event extends Context
     {
         $this->eventName = $name;
         $this->cancelable = $cancelable;
-        parent::__construct($name);
     }
 
     /**
