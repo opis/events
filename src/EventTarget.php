@@ -33,8 +33,8 @@ class EventTarget implements Serializable
 
     /**
      * Constructor
-     * 
-     * @param   RouteCollection|null   $collection (optional)
+     *
+     * @param   RouteCollection|null $collection (optional)
      */
     public function __construct(RouteCollection $collection = null)
     {
@@ -42,6 +42,9 @@ class EventTarget implements Serializable
             $collection = new RouteCollection();
         }
 
+        if ($collection->getSortKey() === null) {
+            $collection->setSortKey('priority');
+        }
         $this->collection = $collection;
     }
 
@@ -91,7 +94,7 @@ class EventTarget implements Serializable
 
     /**
      * Serialize
-     * 
+     *
      * @return  string
      */
     public function serialize()
@@ -101,8 +104,8 @@ class EventTarget implements Serializable
 
     /**
      * Unserialize
-     * 
-     * @param   string  $data
+     *
+     * @param   string $data
      */
     public function unserialize($data)
     {
@@ -114,7 +117,7 @@ class EventTarget implements Serializable
      */
     protected function getRouter(): Router
     {
-        if($this->router === null){
+        if ($this->router === null) {
             $this->router = new Router($this->collection, new EventDispatcher());
         }
 

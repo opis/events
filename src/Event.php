@@ -30,8 +30,8 @@ class Event
 
     /**
      * Constructor
-     * 
-     * @param   string  $name       Event's name
+     *
+     * @param   string $name Event's name
      * @param   boolean $cancelable (optional) Cancelable event
      */
     public function __construct(string $name, bool $cancelable = false)
@@ -42,7 +42,7 @@ class Event
 
     /**
      * Event's name
-     * 
+     *
      * @return  string
      */
     public function name(): string
@@ -52,7 +52,7 @@ class Event
 
     /**
      * Check if event was canceled
-     * 
+     *
      * @return  boolean
      */
     public function canceled(): bool

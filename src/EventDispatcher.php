@@ -42,10 +42,10 @@ class EventDispatcher implements IDispatcher
         $event = $context->data();
 
         /** @var Route $handler */
-        foreach ($this->match($collection, $path) as $handler){
+        foreach ($this->match($collection, $path) as $handler) {
             $callback = $handler->getAction();
             $callback($event);
-            if($event->canceled()){
+            if ($event->canceled()) {
                 break;
             }
         }
@@ -61,8 +61,8 @@ class EventDispatcher implements IDispatcher
      */
     protected function match(RouteCollection $routes, string $path): \Generator
     {
-        foreach ($routes->getRegexPatterns() as $routeID => $pattern){
-            if(preg_match($pattern, $path)){
+        foreach ($routes->getRegexPatterns() as $routeID => $pattern) {
+            if (preg_match($pattern, $path)) {
                 yield $routes->getRoute($routeID);
             }
         }

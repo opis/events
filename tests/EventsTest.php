@@ -25,30 +25,123 @@ class EventsTest extends TestCase
 {
     /** @var  EventTarget */
     protected $target;
-    
+
     public function setUp()
     {
         $this->target = new EventTarget();
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testBasicEvent()
     {
-        $this->target->handle('ok', function(Event $event){
+        $this->target->handle('ok', function (Event $event) {
             print $event->name();
         });
-        
+
         $this->expectOutputString('ok');
         $this->target->emit('ok');
     }
-    
+
+    /**
+     * @throws \Exception
+     */
     public function testParams()
     {
-        $this->target->handle('foo.{bar}', function(Event $event){
+        $this->target->handle('foo.{bar}', function (Event $event) {
             print $event->name();
         })->where('bar', 'x');
-        
+
         $this->expectOutputString('foo.x');
         $this->target->emit('foo.y');
         $this->target->emit('foo.x');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testDefaultPriority()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        });
+
+        $this->target->handle('foo', function () {
+            print "bar";
+        });
+
+        $this->expectOutputString("barfoo");
+        $this->target->emit('foo');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testExplicitPriority()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        }, 1);
+
+        $this->target->handle('foo', function () {
+            print "bar";
+        });
+
+        $this->expectOutputString("foobar");
+        $this->target->emit('foo');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testExplicitPriorityEqual()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        }, 1);
+
+        $this->target->handle('foo', function () {
+            print "bar";
+        }, 1);
+
+        $this->expectOutputString("barfoo");
+        $this->target->emit('foo');
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testDefaultPriorityNotCancel()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        });
+
+        $this->target->handle('foo', function (Event $event) {
+            $event->stop();
+            print "bar";
+        });
+
+        $this->expectOutputString("barfoo");
+        $this->target->emit('foo', false);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testDefaultPriorityCancel()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        });
+
+        $this->target->handle('foo', function (Event $event) {
+            $event->stop();
+            print "bar";
+        });
+
+        $this->expectOutputString("bar");
+        $this->target->emit('foo', true);
     }
 }
