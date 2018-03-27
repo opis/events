@@ -24,7 +24,7 @@ class RouteCollection extends BaseRouteCollection
 {
     public function __construct()
     {
-        parent::__construct(new Builder([
+        parent::__construct(null, new Builder([
             Builder::SEGMENT_DELIMITER => '.',
             Builder::CAPTURE_MODE => (Builder::CAPTURE_LEFT | Builder::CAPTURE_TRAIL),
         ]), 'priority');

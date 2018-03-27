@@ -55,9 +55,7 @@ class EventTarget implements Serializable
      */
     public function handle(string $event, callable $callback, int $priority = 0): Route
     {
-        $handler = new Route($event, $callback);
-        $this->collection->addRoute($handler);
-        return $handler->set('priority', $priority);
+        return $this->collection->createRoute($event, $callback)->set('priority', $priority);
     }
 
     /**
