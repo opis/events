@@ -18,15 +18,34 @@
 namespace Opis\Events;
 
 use Opis\Pattern\Builder;
+use Opis\Routing\Route;
 use Opis\Routing\RouteCollection as BaseRouteCollection;
 
 class RouteCollection extends BaseRouteCollection
 {
     public function __construct()
     {
-        parent::__construct(null, new Builder([
+        parent::__construct(static::class . '::factory', new Builder([
             Builder::SEGMENT_DELIMITER => '.',
             Builder::CAPTURE_MODE => (Builder::CAPTURE_LEFT | Builder::CAPTURE_TRAIL),
         ]), 'priority');
+    }
+
+    /**
+     * @param RouteCollection $collection
+     * @param string $id
+     * @param string $pattern
+     * @param callable $action
+     * @param string|null $name
+     * @return Route
+     */
+    protected static function factory(
+        RouteCollection $collection,
+        string $id,
+        string $pattern,
+        callable $action,
+        string $name = null
+    ): Route {
+        return new Route($collection, $id, $pattern, $action, $name);
     }
 }
