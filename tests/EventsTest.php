@@ -164,4 +164,25 @@ class EventsTest extends TestCase
         $this->expectOutputString("bazbar");
         $this->target->emit('foo', true);
     }
+
+    public function testSerializable()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        });
+
+        $this->target->handle('foo', function (Event $event) {
+            $event->stop();
+            print "bar";
+        });
+
+        $this->target->handle('foo', function () {
+            print 'baz';
+        });
+
+        $target = unserialize(serialize($this->target));
+
+        $this->expectOutputString("bazbar");
+        $target->emit('foo', true);
+    }
 }
