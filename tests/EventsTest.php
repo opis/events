@@ -63,6 +63,17 @@ class EventsTest extends TestCase
         $this->target->emit('foo.x');
     }
 
+    public function testParams3()
+    {
+        $this->target->handle('foo.{bar=x|y}', function (Event $event) {
+            print $event->name();
+        });
+
+        $this->expectOutputString('foo.yfoo.x');
+        $this->target->emit('foo.y');
+        $this->target->emit('foo.x');
+    }
+
     public function testDefaultPriority()
     {
         $this->target->handle('foo', function () {
