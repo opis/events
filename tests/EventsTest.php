@@ -211,4 +211,17 @@ class EventsTest extends TestCase
         $this->expectOutputString("test-data");
         $this->target->dispatch($event);
     }
+
+    public function testDispatch2()
+    {
+        $this->target->handle('foo', function () {
+            print 'ok';
+        });
+
+        $event = new Event("foo", true);
+        $event->stop();
+
+        $this->expectOutputString("");
+        $this->target->dispatch($event);
+    }
 }

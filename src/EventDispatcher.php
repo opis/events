@@ -39,6 +39,10 @@ class EventDispatcher implements IDispatcher
         /** @var Event $event */
         $event = $context->data();
 
+        if ($event->canceled()) {
+            return $event;
+        }
+
         /** @var Route $handler */
         foreach ($this->match($collection, $path) as $handler) {
             $callback = $handler->getAction();
