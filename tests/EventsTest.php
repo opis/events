@@ -185,4 +185,30 @@ class EventsTest extends TestCase
         $this->expectOutputString("bazbar");
         $target->emit('foo', true);
     }
+
+    public function testDispatch()
+    {
+        $this->target->handle('foo', function ($event) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            print $event->data();
+        });
+
+        $event = new class("foo", false, "test-data") extends Event {
+            protected $data;
+
+            public function __construct(string $name, bool $cancelable = false, string $data = '')
+            {
+                $this->data = $data;
+                parent::__construct($name, $cancelable);
+            }
+
+            public function data(): string
+            {
+                return $this->data;
+            }
+        };
+
+        $this->expectOutputString("test-data");
+        $this->target->dispatch($event);
+    }
 }
