@@ -145,4 +145,23 @@ class EventsTest extends TestCase
         $this->expectOutputString("bar");
         $this->target->emit('foo', true);
     }
+
+    public function testDefaultPriorityCancel2()
+    {
+        $this->target->handle('foo', function () {
+            print "foo";
+        });
+
+        $this->target->handle('foo', function (Event $event) {
+            $event->stop();
+            print "bar";
+        });
+
+        $this->target->handle('f{=o{2}}', function () {
+            print "baz";
+        });
+
+        $this->expectOutputString("bazbar");
+        $this->target->emit('foo', true);
+    }
 }
