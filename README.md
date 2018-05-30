@@ -7,22 +7,34 @@ Opis Events
 
 Events library
 --------------
-**Opis Events** is a library that can be used for dispatching and intercepting events. This library is
-builded on top of the **Opis Routing** library and provides a full range of features like filters and
-events' priorities. 
+**Opis Events** is a library that can be used for dispatching and intercepting events.
 
-### License
+The library is built on top of the [Opis Routing](https://www.opis.io/routing) library,
+ and provides a full range of features like filters and priorities.
 
-**Opis HTTP Routing** is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). 
+## Documentation
 
-### Requirements
+Examples and documentation can be found [here](https://www.opis.io/events).
+
+## License
+
+**Opis Events** is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+
+## Requirements
 
 * PHP 7.0.* or higher
-* [Opis Routing](http://www.opis.io/routing) 5.0.x-dev
+* [Opis Routing](https://www.opis.io/routing) 5.0.x-dev
 
-### Installation
+## Installation
 
-This library is available on [Packagist](https://packagist.org/packages/opis/events) and can be installed using [Composer](http://getcomposer.org).
+This library is available on [Packagist](https://packagist.org/packages/opis/events)
+ and can be installed from a command line interface by using [Composer](http://getcomposer.org).
+
+```bash
+composer require opis/events
+```
+
+Or you could directly reference it into your `composer.json` file as a dependency
 
 ```json
 {
@@ -35,13 +47,3 @@ This library is available on [Packagist](https://packagist.org/packages/opis/eve
 If you are unable to use [Composer](http://getcomposer.org) you can download the
 [tar.gz](https://github.com/opis/events/archive/master.tar.gz) or the [zip](https://github.com/opis/events/archive/master.zip)
 archive file, extract the content of the archive and include de `autoload.php` file into your project. 
-
-```php
-
-require_once 'path/to/events-master/autoload.php';
-
-```
-
-### Documentation
-
-Examples and documentation can be found [here](http://opis.io/events).
