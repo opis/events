@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2014-2017 The Opis Project
+ * Copyright 2013-2018 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,10 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\Route;
 use Opis\Pattern\RegexBuilder;
-use Opis\Routing\RouteCollection as BaseRouteCollection;
+use Opis\Routing\{
+    Route, RouteCollection as BaseRouteCollection
+};
 
 class RouteCollection extends BaseRouteCollection
 {

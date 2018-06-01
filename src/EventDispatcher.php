@@ -17,10 +17,10 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\Context;
-use Opis\Routing\Route;
-use Opis\Routing\Router;
 use Serializable;
+use Opis\Routing\{
+    Context, Route, Router
+};
 
 class EventDispatcher implements Serializable
 {
