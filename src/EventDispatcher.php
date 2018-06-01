@@ -22,7 +22,7 @@ use Opis\Routing\Route;
 use Opis\Routing\Router;
 use Serializable;
 
-class EventTarget implements Serializable
+class EventDispatcher implements Serializable
 {
     /** @var    RouteCollection */
     protected $collection;

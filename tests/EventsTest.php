@@ -18,17 +18,17 @@
 namespace Opis\Events\Test;
 
 use Opis\Events\Event;
-use Opis\Events\EventTarget;
+use Opis\Events\EventDispatcher;
 use PHPUnit\Framework\TestCase;
 
 class EventsTest extends TestCase
 {
-    /** @var  EventTarget */
+    /** @var  EventDispatcher */
     protected $target;
 
     public function setUp()
     {
-        $this->target = new EventTarget();
+        $this->target = new EventDispatcher();
     }
 
     public function testBasicEvent()
