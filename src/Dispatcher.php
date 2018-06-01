@@ -21,7 +21,7 @@ use Opis\Routing\IDispatcher;
 use Opis\Routing\Route;
 use Opis\Routing\Router;
 
-class EventDispatcher implements IDispatcher
+class Dispatcher implements IDispatcher
 {
     /**
      * @param Router $router
