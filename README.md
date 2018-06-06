@@ -9,26 +9,24 @@ Events library
 --------------
 **Opis Events** is a library that can be used for dispatching and intercepting events.
 
-The library is built on top of the [Opis Routing](https://www.opis.io/routing) library,
- and provides a full range of features like filters and priorities.
+### Documentation
 
-## Documentation
+The full documentation for this library can be found [here][documentation]
 
-Examples and documentation can be found [here](https://www.opis.io/events).
+### License
 
-## License
+**Opis Events** is licensed under the [Apache License, Version 2.0][apache_license]. 
 
-**Opis Events** is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+### Requirements
 
-## Requirements
+* PHP ^7.0
+* [Opis Routing] ^5.0
 
-* PHP 7.0.* or higher
-* [Opis Routing](https://www.opis.io/routing) 5.0.x-dev
 
 ## Installation
 
-This library is available on [Packagist](https://packagist.org/packages/opis/events)
- and can be installed from a command line interface by using [Composer](http://getcomposer.org).
+**Opis Events** is available on [Packagist] and it can be installed from a 
+command line interface by using [Composer]. 
 
 ```bash
 composer require opis/events
@@ -39,11 +37,14 @@ Or you could directly reference it into your `composer.json` file as a dependenc
 ```json
 {
     "require": {
-        "opis/events": "5.0.x-dev"
+        "opis/events": "^5.0"
     }
 }
 ```
 
-If you are unable to use [Composer](http://getcomposer.org) you can download the
-[tar.gz](https://github.com/opis/events/archive/master.tar.gz) or the [zip](https://github.com/opis/events/archive/master.zip)
-archive file, extract the content of the archive and include de `autoload.php` file into your project. 
+[documentation]: https://www.opis.io/events "Documentation"
+[apache_license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
+[Packagist]: https://packagist.org/packages/opis/events "Packagist"
+[Composer]: https://getcomposer.org "Composer"
+[Opis Routing]: https://www.opis.io/routing "Opis Routing"
+
