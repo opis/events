@@ -17,8 +17,7 @@
 
 namespace Opis\Events\Test;
 
-use Opis\Events\Event;
-use Opis\Events\EventDispatcher;
+use Opis\Events\{Event, EventDispatcher};
 use PHPUnit\Framework\TestCase;
 
 class EventsTest extends TestCase
@@ -193,7 +192,8 @@ class EventsTest extends TestCase
             print $event->data();
         });
 
-        $event = new class("foo", false, "test-data") extends Event {
+        $event = new class("foo", false, "test-data") extends Event
+        {
             protected $data;
 
             public function __construct(string $name, bool $cancelable = false, string $data = '')

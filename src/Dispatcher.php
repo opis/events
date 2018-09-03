@@ -17,9 +17,7 @@
 
 namespace Opis\Events;
 
-use Opis\Routing\IDispatcher;
-use Opis\Routing\Route;
-use Opis\Routing\Router;
+use Opis\Routing\{IDispatcher, Route, Router};
 
 class Dispatcher implements IDispatcher
 {
