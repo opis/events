@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": ">=7.0.0",
-        "opis/routing": "5.0.x-dev"
+        "opis/routing": "^5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
