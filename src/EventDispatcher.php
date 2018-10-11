@@ -24,16 +24,14 @@ use Opis\Routing\{
 
 class EventDispatcher implements Serializable
 {
-    /** @var    RouteCollection */
+    /** @var RouteCollection */
     protected $collection;
 
-    /** @var    Router */
+    /** @var Router */
     protected $router;
 
     /**
-     * Constructor
-     *
-     * @param   RouteCollection|null $collection (optional)
+     * @param RouteCollection|null $collection
      */
     public function __construct(RouteCollection $collection = null)
     {
@@ -47,11 +45,11 @@ class EventDispatcher implements Serializable
     /**
      * Handle an event
      *
-     * @param   string $event Event's name
-     * @param   callable $callback Callback
-     * @param   int $priority (optional) Event's priority
+     * @param string $event Event's name
+     * @param callable $callback Callback
+     * @param int $priority (optional) Event's priority
      *
-     * @return  Route
+     * @return Route
      */
     public function handle(string $event, callable $callback, int $priority = 0): Route
     {
@@ -61,10 +59,10 @@ class EventDispatcher implements Serializable
     /**
      * Emits an event
      *
-     * @param   string $name Event's name
-     * @param   boolean $cancelable (optional) Cancelable event
+     * @param string $name Event's name
+     * @param boolean $cancelable (optional) Cancelable event
      *
-     * @return  Event
+     * @return Event
      */
     public function emit(string $name, bool $cancelable = false): Event
     {
@@ -74,9 +72,9 @@ class EventDispatcher implements Serializable
     /**
      * Dispatch an event
      *
-     * @param   Event $event Event
+     * @param Event $event Event
      *
-     * @return  Event
+     * @return Event
      */
     public function dispatch(Event $event): Event
     {
@@ -86,7 +84,7 @@ class EventDispatcher implements Serializable
     /**
      * Serialize
      *
-     * @return  string
+     * @return string
      */
     public function serialize()
     {
@@ -96,7 +94,7 @@ class EventDispatcher implements Serializable
     /**
      * Unserialize
      *
-     * @param   string $data
+     * @param string $data
      */
     public function unserialize($data)
     {

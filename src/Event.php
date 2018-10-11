@@ -19,14 +19,14 @@ namespace Opis\Events;
 
 class Event
 {
-    /** @var    string  Event's name */
-    protected $eventName;
+    /** @var  string  Event's name */
+    private $eventName;
 
-    /** @var    boolean Cancelable event */
-    protected $cancelable;
+    /** @var boolean Cancelable event */
+    private $cancelable;
 
-    /** @var    boolean Canceled event */
-    protected $isCanceled = false;
+    /** @var boolean Canceled event */
+    private $isCanceled = false;
 
     /**
      * Constructor
@@ -43,7 +43,7 @@ class Event
     /**
      * Event's name
      *
-     * @return  string
+     * @return string
      */
     public function name(): string
     {
@@ -51,9 +51,9 @@ class Event
     }
 
     /**
-     * Check if event was canceled
+     * Tells if event was canceled
      *
-     * @return  boolean
+     * @return boolean
      */
     public function canceled(): bool
     {
@@ -68,5 +68,15 @@ class Event
         if ($this->cancelable === true) {
             $this->isCanceled = true;
         }
+    }
+
+    /**
+     * Tells if event is cancellable
+     *
+     * @return bool
+     */
+    public function isCancelable(): bool
+    {
+        return $this->cancelable;
     }
 }
