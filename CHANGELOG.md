@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v5.0.0, 2018.09.04
+## v5.0.0, 2018.10.16
 ### Added
 - Support for PHP 7.x
 - Source files were moved from `lib` to `src`
@@ -17,9 +17,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Updated `opis/routing` dependency to version `^5.0`
 - All classes were updated in order to reflect changes
-
-### Fixed
-- Nothing
 
 ## v4.1.1 - 2016.01.16
 ### Added
