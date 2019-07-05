@@ -2,7 +2,7 @@ Opis Events
 ===========
 [![Build Status](https://travis-ci.org/opis/events.svg?branch=master)](https://travis-ci.org/opis/events)
 [![Latest Stable Version](https://poser.pugx.org/opis/events/version.png)](https://packagist.org/packages/opis/events)
-[![Latest Unstable Version](https://poser.pugx.org/opis/events/v/unstable.png)](//packagist.org/packages/opis/events)
+[![Latest Unstable Version](https://poser.pugx.org/opis/events/v/unstable.png)](https://packagist.org/packages/opis/events)
 [![License](https://poser.pugx.org/opis/events/license.png)](https://packagist.org/packages/opis/events)
 
 Events library
@@ -19,7 +19,7 @@ The full documentation for this library can be found [here][documentation]
 
 ### Requirements
 
-* PHP ^7.0
+* PHP ^7.1
 * [Opis Routing] ^5.0
 
 
