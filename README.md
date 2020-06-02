@@ -1,6 +1,6 @@
 Opis Events
 ===========
-[![Build Status](https://travis-ci.org/opis/events.svg?branch=master)](https://travis-ci.org/opis/events)
+[![Tests](https://github.com/opis/events/workflows/Tests/badge.svg)](https://github.com/opis/events/actions)
 [![Latest Stable Version](https://poser.pugx.org/opis/events/version.png)](https://packagist.org/packages/opis/events)
 [![Latest Unstable Version](https://poser.pugx.org/opis/events/v/unstable.png)](https://packagist.org/packages/opis/events)
 [![License](https://poser.pugx.org/opis/events/license.png)](https://packagist.org/packages/opis/events)
@@ -15,12 +15,12 @@ The full documentation for this library can be found [here][documentation]
 
 ### License
 
-**Opis Events** is licensed under the [Apache License, Version 2.0][apache_license]. 
+**Opis Events** is licensed under the [Apache License, Version 2.0][license]. 
 
 ### Requirements
 
-* PHP ^7.1
-* [Opis Routing] ^5.0
+* PHP ^7.4
+* [Opis Utils] ^2020
 
 
 ## Installation
@@ -37,14 +37,14 @@ Or you could directly reference it into your `composer.json` file as a dependenc
 ```json
 {
     "require": {
-        "opis/events": "^5.0"
+        "opis/events": "^2020"
     }
 }
 ```
 
 [documentation]: https://opis.io/events "Documentation"
-[apache_license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
+[license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
 [Packagist]: https://packagist.org/packages/opis/events "Packagist"
 [Composer]: https://getcomposer.org "Composer"
-[Opis Routing]: https://opis.io/routing "Opis Routing"
+[Opis Utils]: https://github.com/opis/utils "Opis Utils"
 

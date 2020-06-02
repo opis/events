@@ -17,38 +17,14 @@
 
 namespace Opis\Events;
 
-class Event
+interface EventHandler
 {
-    private string $name;
-    private bool $cancelable;
-    private bool $isCanceled = false;
+    public function where(string $name, string $regex): self;
 
-    public function __construct(string $name, bool $cancelable = false)
-    {
-        $this->name = $name;
-        $this->cancelable = $cancelable;
-    }
-
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    public function isCancelable(): bool
-    {
-        return $this->cancelable;
-    }
-
-    public function isCanceled(): bool
-    {
-        return $this->isCanceled;
-    }
-
-    public function cancel(): bool
-    {
-        if (!$this->cancelable) {
-            return false;
-        }
-        return $this->isCanceled = true;
-    }
+    /**
+     * @param string $name
+     * @param string[] $values
+     * @return $this
+     */
+    public function whereIn(string $name, array $values): self;
 }

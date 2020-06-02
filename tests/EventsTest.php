@@ -19,13 +19,14 @@ namespace Opis\Events\Test;
 
 use Opis\Events\{Event, EventDispatcher};
 use PHPUnit\Framework\TestCase;
+use function Opis\Closure\init as enableSerialization;
 
 class EventsTest extends TestCase
 {
     /** @var  EventDispatcher */
     protected $target;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->target = new EventDispatcher();
     }
@@ -122,7 +123,7 @@ class EventsTest extends TestCase
         });
 
         $this->target->handle('foo', function (Event $event) {
-            $event->stop();
+            $event->cancel();
             print "bar";
         });
 
@@ -137,7 +138,7 @@ class EventsTest extends TestCase
         });
 
         $this->target->handle('foo', function (Event $event) {
-            $event->stop();
+            $event->cancel();
             print "bar";
         });
 
@@ -152,7 +153,7 @@ class EventsTest extends TestCase
         });
 
         $this->target->handle('foo', function (Event $event) {
-            $event->stop();
+            $event->cancel();
             print "bar";
         });
 
@@ -162,27 +163,6 @@ class EventsTest extends TestCase
 
         $this->expectOutputString("bazbar");
         $this->target->emit('foo', true);
-    }
-
-    public function testSerializable()
-    {
-        $this->target->handle('foo', function () {
-            print "foo";
-        });
-
-        $this->target->handle('foo', function (Event $event) {
-            $event->stop();
-            print "bar";
-        });
-
-        $this->target->handle('foo', function () {
-            print 'baz';
-        });
-
-        $target = unserialize(serialize($this->target));
-
-        $this->expectOutputString("bazbar");
-        $target->emit('foo', true);
     }
 
     public function testDispatch()
@@ -219,9 +199,32 @@ class EventsTest extends TestCase
         });
 
         $event = new Event("foo", true);
-        $event->stop();
+        $event->cancel();
 
         $this->expectOutputString("");
         $this->target->dispatch($event);
+    }
+
+    public function testSerializable()
+    {
+        enableSerialization();
+
+        $this->target->handle('foo', function () {
+            print "foo";
+        });
+
+        $this->target->handle('foo', function (Event $event) {
+            $event->cancel();
+            print "bar";
+        });
+
+        $this->target->handle('foo', function () {
+            print 'baz';
+        });
+
+        $target = unserialize(serialize($this->target));
+
+        $this->expectOutputString("bazbar");
+        $target->emit('foo', true);
     }
 }

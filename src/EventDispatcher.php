@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,99 +17,77 @@
 
 namespace Opis\Events;
 
-use Serializable;
-use Opis\Routing\{
-    Context, Route, Router
-};
+use Opis\Utils\{RegexBuilder, SortableList};
 
-class EventDispatcher implements Serializable
+class EventDispatcher extends SortableList
 {
-    /** @var RouteCollection */
-    protected $collection;
+    private RegexBuilder $regexBuilder;
 
-    /** @var Router */
-    protected $router;
-
-    /**
-     * @param RouteCollection|null $collection
-     */
-    public function __construct(RouteCollection $collection = null)
+    public function __construct()
     {
-        if ($collection === null) {
-            $collection = new RouteCollection();
+        $this->regexBuilder = new RegexBuilder([
+            RegexBuilder::SEPARATOR_SYMBOL => '.',
+            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
+        ]);
+    }
+
+    public function handle(string $name, callable $callback, int $priority = 0): EventHandler
+    {
+        $handler = new DefaultEventHandler($this, $name, $callback);
+        $this->addItem($handler, $priority);
+        return $handler;
+    }
+
+    public function getRegexBuilder(): RegexBuilder
+    {
+        return $this->regexBuilder;
+    }
+
+    public function dispatch(Event $event): Event
+    {
+        if ($event->isCanceled()) {
+            return $event;
         }
 
-        $this->collection = $collection;
+        $name = $event->name();
+
+        /** @var callable $callback */
+        foreach ($this->match($name) as $callback) {
+            $callback($event);
+            if ($event->isCanceled()) {
+                break;
+            }
+        }
+
+        return $event;
     }
 
-    /**
-     * Handle an event
-     *
-     * @param string $event Event's name
-     * @param callable $callback Callback
-     * @param int $priority (optional) Event's priority
-     *
-     * @return Route
-     */
-    public function handle(string $event, callable $callback, int $priority = 0): Route
-    {
-        return $this->collection->createRoute($event, $callback)->set('priority', $priority);
-    }
-
-    /**
-     * Emits an event
-     *
-     * @param string $name Event's name
-     * @param boolean $cancelable (optional) Cancelable event
-     *
-     * @return Event
-     */
     public function emit(string $name, bool $cancelable = false): Event
     {
         return $this->dispatch(new Event($name, $cancelable));
     }
 
-    /**
-     * Dispatch an event
-     *
-     * @param Event $event Event
-     *
-     * @return Event
-     */
-    public function dispatch(Event $event): Event
+    private function match(string $name): \Generator
     {
-        return $this->getRouter()->route(new Context($event->name(), $event));
-    }
-
-    /**
-     * Serialize
-     *
-     * @return string
-     */
-    public function serialize()
-    {
-        return serialize($this->collection);
-    }
-
-    /**
-     * Unserialize
-     *
-     * @param string $data
-     */
-    public function unserialize($data)
-    {
-        $this->collection = unserialize($data);
-    }
-
-    /**
-     * @return Router
-     */
-    protected function getRouter(): Router
-    {
-        if ($this->router === null) {
-            $this->router = new Router($this->collection, new Dispatcher());
+        /** @var DefaultEventHandler $handler */
+        foreach ($this->getValues() as $handler) {
+            if (preg_match($handler->getRegex(), $name)) {
+                yield $handler->getCallback();
+            }
         }
+    }
 
-        return $this->router;
+    public function __serialize(): array
+    {
+        return [
+            'regexBuilder' => $this->regexBuilder,
+            'parent' => parent::__serialize(),
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->regexBuilder = $data['regexBuilder'];
+        parent::__unserialize($data['parent']);
     }
 }
