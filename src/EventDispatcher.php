@@ -17,6 +17,7 @@
 
 namespace Opis\Events;
 
+use Generator;
 use Opis\Utils\{RegexBuilder, SortableList};
 
 class EventDispatcher extends SortableList
@@ -25,10 +26,7 @@ class EventDispatcher extends SortableList
 
     public function __construct()
     {
-        $this->regexBuilder = new RegexBuilder([
-            RegexBuilder::SEPARATOR_SYMBOL => '.',
-            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
-        ]);
+        $this->regexBuilder = $this->createRegexBuilder();
     }
 
     public function handle(string $name, callable $callback, int $priority = 0): EventHandler
@@ -67,7 +65,7 @@ class EventDispatcher extends SortableList
         return $this->dispatch(new Event($name, $cancelable));
     }
 
-    private function match(string $name): \Generator
+    private function match(string $name): Generator
     {
         /** @var DefaultEventHandler $handler */
         foreach ($this->getValues() as $handler) {
@@ -77,17 +75,22 @@ class EventDispatcher extends SortableList
         }
     }
 
+    private function createRegexBuilder(): RegexBuilder
+    {
+        return new RegexBuilder([
+            RegexBuilder::SEPARATOR_SYMBOL => '.',
+            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
+        ]);
+    }
+
     public function __serialize(): array
     {
-        return [
-            'regexBuilder' => $this->regexBuilder,
-            'parent' => parent::__serialize(),
-        ];
+        return parent::__serialize();
     }
 
     public function __unserialize(array $data): void
     {
-        $this->regexBuilder = $data['regexBuilder'];
-        parent::__unserialize($data['parent']);
+        $this->regexBuilder = $this->createRegexBuilder();
+        parent::__unserialize($data);
     }
 }

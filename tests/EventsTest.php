@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2018-2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,8 +23,7 @@ use function Opis\Closure\init as enableSerialization;
 
 class EventsTest extends TestCase
 {
-    /** @var  EventDispatcher */
-    protected $target;
+    protected EventDispatcher $target;
 
     public function setUp(): void
     {
