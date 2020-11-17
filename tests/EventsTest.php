@@ -18,8 +18,8 @@
 namespace Opis\Events\Test;
 
 use Opis\Events\{Event, EventDispatcher};
+use Opis\Closure\SerializableClosure;
 use PHPUnit\Framework\TestCase;
-use function Opis\Closure\init as enableSerialization;
 
 class EventsTest extends TestCase
 {
@@ -32,7 +32,7 @@ class EventsTest extends TestCase
 
     public function testBasicEvent()
     {
-        $this->target->handle('ok', function (Event $event) {
+        $this->target->handle('ok', static function (Event $event) {
             print $event->name();
         });
 
@@ -42,7 +42,7 @@ class EventsTest extends TestCase
 
     public function testParams()
     {
-        $this->target->handle('foo.{bar}', function (Event $event) {
+        $this->target->handle('foo.{bar}', static function (Event $event) {
             print $event->name();
         })->where('bar', 'x');
 
@@ -53,7 +53,7 @@ class EventsTest extends TestCase
 
     public function testParams2()
     {
-        $this->target->handle('foo.{bar}', function (Event $event) {
+        $this->target->handle('foo.{bar}', static function (Event $event) {
             print $event->name();
         })->where('bar', 'x|y');
 
@@ -64,7 +64,7 @@ class EventsTest extends TestCase
 
     public function testParams3()
     {
-        $this->target->handle('foo.{bar=x|y}', function (Event $event) {
+        $this->target->handle('foo.{bar=x|y}', static function (Event $event) {
             print $event->name();
         });
 
@@ -75,11 +75,11 @@ class EventsTest extends TestCase
 
     public function testDefaultPriority()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         });
 
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "bar";
         });
 
@@ -89,11 +89,11 @@ class EventsTest extends TestCase
 
     public function testExplicitPriority()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         }, 1);
 
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "bar";
         });
 
@@ -103,11 +103,11 @@ class EventsTest extends TestCase
 
     public function testExplicitPriorityEqual()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         }, 1);
 
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "bar";
         }, 1);
 
@@ -117,11 +117,11 @@ class EventsTest extends TestCase
 
     public function testDefaultPriorityNotCancel()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         });
 
-        $this->target->handle('foo', function (Event $event) {
+        $this->target->handle('foo', static function (Event $event) {
             $event->cancel();
             print "bar";
         });
@@ -132,11 +132,11 @@ class EventsTest extends TestCase
 
     public function testDefaultPriorityCancel()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         });
 
-        $this->target->handle('foo', function (Event $event) {
+        $this->target->handle('foo', static function (Event $event) {
             $event->cancel();
             print "bar";
         });
@@ -147,16 +147,16 @@ class EventsTest extends TestCase
 
     public function testDefaultPriorityCancel2()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         });
 
-        $this->target->handle('foo', function (Event $event) {
+        $this->target->handle('foo', static function (Event $event) {
             $event->cancel();
             print "bar";
         });
 
-        $this->target->handle('f{=o{2}}', function () {
+        $this->target->handle('f{=o{2}}', static function () {
             print "baz";
         });
 
@@ -166,7 +166,7 @@ class EventsTest extends TestCase
 
     public function testDispatch()
     {
-        $this->target->handle('foo', function ($event) {
+        $this->target->handle('foo', static function ($event) {
             /** @noinspection PhpUndefinedMethodInspection */
             print $event->data();
         });
@@ -193,7 +193,7 @@ class EventsTest extends TestCase
 
     public function testDispatch2()
     {
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print 'ok';
         });
 
@@ -206,18 +206,18 @@ class EventsTest extends TestCase
 
     public function testSerializable()
     {
-        enableSerialization();
+        SerializableClosure::init();
 
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print "foo";
         });
 
-        $this->target->handle('foo', function (Event $event) {
+        $this->target->handle('foo', static function (Event $event) {
             $event->cancel();
             print "bar";
         });
 
-        $this->target->handle('foo', function () {
+        $this->target->handle('foo', static function () {
             print 'baz';
         });
 

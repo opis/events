@@ -19,6 +19,11 @@ namespace Opis\Events;
 
 interface EventHandler
 {
+    /**
+     * @param string $name
+     * @param string $regex
+     * @return $this
+     */
     public function where(string $name, string $regex): self;
 
     /**
