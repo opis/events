@@ -26,6 +26,7 @@ class EventDispatcher extends SortableList
 
     public function __construct()
     {
+        parent::__construct([], true, true);
         $this->regexBuilder = $this->createRegexBuilder();
     }
 
